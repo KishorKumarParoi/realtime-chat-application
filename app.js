@@ -6,3 +6,12 @@
  * Time : 9:27:44 PM
  */
 
+// Dependencies
+import dotenv from "dotenv";
+import express from "express";
+
+// App object - module scaffolding
+const app = express();
+dotenv.config();
+
+console.log(app);
