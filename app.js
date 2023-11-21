@@ -9,9 +9,14 @@
 // Dependencies
 import dotenv from "dotenv";
 import express from "express";
+import mongoose from "mongoose";
 
 // App object - module scaffolding
 const app = express();
 dotenv.config();
 
-console.log(app);
+// Database connection
+mongoose
+  .connect(process.env.MONGO_CONNECTION_STRING, {})
+  .then(() => console.log("Database connected successfully!"))
+  .catch((err) => console.log(err));
