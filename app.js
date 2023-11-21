@@ -20,3 +20,7 @@ mongoose
   .connect(process.env.MONGO_CONNECTION_STRING, {})
   .then(() => console.log("Database connected successfully!"))
   .catch((err) => console.log(err));
+
+// Request Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
