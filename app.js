@@ -7,9 +7,11 @@
  */
 
 // Dependencies
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import path from "path";
 
 // App object - module scaffolding
 const app = express();
@@ -27,3 +29,18 @@ app.use(express.urlencoded({ extended: true }));
 
 // set view engine
 app.set("view engine", "ejs");
+
+// Set Static folder
+app.use(express.static(path.join(process.cwd(), "public")));
+
+// Cookie Parser
+app.use(cookieParser(process.env.COOKIE_SECRET));
+
+// Routes
+
+// error handler
+
+// Server setup
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});
