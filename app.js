@@ -14,8 +14,8 @@ import mongoose from "mongoose";
 import path from "path";
 
 // internal imports
-import notFoundHandler from "./middlewares/common/errorHandler.js";
-import errorHandler from "./middlewares/common/notFoundHandler.js";
+import errorHandler from "./middlewares/common/errorHandler.js";
+import notFoundHandler from "./middlewares/common/notFoundHandler.js";
 
 // App object - module scaffolding
 const app = express();
@@ -41,15 +41,17 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // Routes
-app.use("/", (req, res) => {
-  res.send("Hello World");
-});
+// app.use("/", (req, res) => {
+//   res.send("Hello World");
+// });
 
 // 404 not found error handler
 app.use(notFoundHandler);
+// console.log("🚀 ~ file: app.js:50 ~ notFoundHandler:", notFoundHandler);
 
 // default error handler
 app.use(errorHandler);
+// console.log("🚀 ~ file: app.js:54 ~ errorHandler):", errorHandler);
 
 // Server setup
 app.listen(process.env.PORT, () => {
