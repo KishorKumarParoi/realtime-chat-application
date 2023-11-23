@@ -16,6 +16,9 @@ import path from "path";
 // internal imports
 import errorHandler from "./middlewares/common/errorHandler.js";
 import notFoundHandler from "./middlewares/common/notFoundHandler.js";
+import inboxRouter from "./router/inboxRouter.js";
+import loginRouter from "./router/loginRouter.js";
+import usersRouter from "./router/usersRouter.js";
 
 // App object - module scaffolding
 const app = express();
@@ -40,10 +43,10 @@ app.use(express.static(path.join(process.cwd(), "public")));
 // Cookie Parser
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-// Routes
-// app.use("/", (req, res) => {
-//   res.send("Hello World");
-// });
+// Routing setup
+app.use("/", loginRouter);
+app.use("/users", usersRouter);
+app.use("/inbox", inboxRouter);
 
 // 404 not found error handler
 app.use(notFoundHandler);
