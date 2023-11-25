@@ -6,7 +6,11 @@
  * Time : 4:47:19 PM
  */
 
+import uploader from "../../utilities/singleUploader.js";
+
 function avatarUpload(req, res, next) {
+  console.log(uploader);
+
   const upload = uploader(
     "avatars",
     ["image/jpeg", "image/jpg", "image/png"],
