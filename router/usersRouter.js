@@ -41,7 +41,7 @@ router.post(
 );
 
 // remove user
-router.delete("/", removeUser);
+router.delete("/:id", removeUser);
 
 // export router
 export default router;
