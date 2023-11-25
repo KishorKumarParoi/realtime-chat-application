@@ -1,13 +1,18 @@
 // external imports
 import { check, validationResult } from "express-validator";
-import { unlink } from "fs/promises";
+import { unlink } from "fs";
 import createError from "http-errors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // internal imports
 import User from "../../models/People.js";
 
 // add user validator
-const addUsersValidator = [
+const addUserValidators = [
   check("name")
     .isLength({
       min: 1,
@@ -37,7 +42,7 @@ const addUsersValidator = [
     .withMessage("Mobile number must be a valid Bangladeshi mobile number")
     .custom(async (value) => {
       try {
-        const user = User.findOne({ mobile: value });
+        const user = await User.findOne({ mobile: value });
         if (user) {
           throw createError("Mobile number already in use!");
         }
@@ -66,11 +71,9 @@ const addUserValidationHandler = function (req, res, next) {
       const { filename } = req.files[0];
 
       unlink(
-        path.join(
-          `${process.cwd()}../../../../public/uploads/avatars/${filename}`
-        ),
+        path.join(`${__dirname}/../../public/uploads/avatars/${filename}`),
         (err) => {
-          console.log(err);
+          if (err) console.log(err);
         }
       );
     }
@@ -81,4 +84,4 @@ const addUserValidationHandler = function (req, res, next) {
   }
 };
 
-export { addUserValidationHandler, addUsersValidator };
+export { addUserValidationHandler, addUserValidators };

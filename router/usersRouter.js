@@ -9,12 +9,20 @@
 // external imports
 import express from "express";
 import { check } from "express-validator";
-import { addUser, getUsers } from "../controllers/usersController.js";
+
+// internal imports
+import {
+  addUser,
+  getUsers,
+  removeUser,
+} from "../controllers/usersController.js";
+
 import decorateHtmlResponse from "../middlewares/common/decorateHTMLResponse.js";
 import avatarUpload from "../middlewares/users/avatarUpload.js";
+
 import {
   addUserValidationHandler,
-  addUsersValidator,
+  addUserValidators,
 } from "../middlewares/users/usersValidator.js";
 
 const router = express.Router();
@@ -27,10 +35,13 @@ router.get("/", decorateHtmlResponse("Users"), getUsers);
 router.post(
   "/",
   avatarUpload,
-  addUsersValidator,
+  addUserValidators,
   addUserValidationHandler,
   addUser
 );
+
+// remove user
+router.delete("/", removeUser);
 
 // export router
 export default router;

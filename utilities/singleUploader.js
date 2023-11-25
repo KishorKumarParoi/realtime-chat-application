@@ -9,15 +9,19 @@
 import createError from "http-errors";
 import multer from "multer";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function uploader(
   subfolder_path,
-  allowed_path_types,
+  allowed_file_types,
   max_file_size,
   error_msg
 ) {
   // make upload object
-  const UPLOADS_FOLDER = `${process.cwd()}/../../public/uploads/${subfolder_path}`;
+  const UPLOADS_FOLDER = `${__dirname}/../public/uploads/${subfolder_path}/`;
 
   // define the storage
   const storage = multer.diskStorage({
@@ -27,7 +31,11 @@ function uploader(
     filename: (req, file, cb) => {
       const fileExt = path.extname(file.originalname);
       const fileName =
-        file.originalname.replace(fileExt, "").toLowerCase().split().join("-") +
+        file.originalname
+          .replace(fileExt, "")
+          .toLowerCase()
+          .split(" ")
+          .join("-") +
         "-" +
         Date.now();
       cb(null, fileName + fileExt);
@@ -41,7 +49,7 @@ function uploader(
       fileSize: max_file_size,
     },
     fileFilter: (req, file, cb) => {
-      if (allowed_path_types.includes(file.mimetype)) {
+      if (allowed_file_types.includes(file.mimetype)) {
         cb(null, true);
       } else {
         cb(createError(error_msg));
