@@ -25,15 +25,18 @@ import {
   addUserValidators,
 } from "../middlewares/users/usersValidator.js";
 
+import { checkLogin } from "../middlewares/common/checkLogin.js";
+
 const router = express.Router();
 console.log(check);
 
 // login page
-router.get("/", decorateHtmlResponse("Users"), getUsers);
+router.get("/", decorateHtmlResponse("Users"), checkLogin, getUsers);
 
 // add user
 router.post(
   "/",
+  checkLogin,
   avatarUpload,
   addUserValidators,
   addUserValidationHandler,
