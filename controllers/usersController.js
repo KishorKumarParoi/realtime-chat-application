@@ -21,7 +21,7 @@ import User from "../models/People.js";
 // get Users page
 async function getUsers(req, res, next) {
   try {
-    const users = await User.find({});
+    const users = await User.find();
     res.render("users", {
       users: users,
     });
@@ -51,6 +51,7 @@ async function addUser(req, res, next) {
   // save user and send error
   try {
     const result = await newUser.save();
+    console.log(result);
     res.status(200).json({
       message: "User was added successfully!",
     });
@@ -68,6 +69,7 @@ async function addUser(req, res, next) {
 // remove user
 
 async function removeUser(req, res, next) {
+  console.log(req.params.id);
   try {
     const user = await User.findByIdAndDelete({
       _id: req.params.id,

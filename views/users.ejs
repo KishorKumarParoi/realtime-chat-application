@@ -22,15 +22,15 @@
           <tr id="<%= user._id%>">
             <td class="name">
               <% if(user.avatar) { %>
-              <img src="../public/uploads/avatars/<%= user.avatar %>" />
+              <img src="./uploads/avatars/<%= user.avatar %>" />
               <% } else { %>
-                <img src="../public/images/nophoto.png" alt="">
+                <img src="./images/nophoto.png" alt="">
                 <% } %>
               <span><%= user.name %> </span>
             </td>
             <td><%= user.email %></td>
             <td class="manage">
-              <img src="../public/images/trash.png" alt="Delete" onclick="deleteUser('<%=user._id%>')" />
+              <img src="./images/trash.png" alt="Delete" onclick="deleteUser('<%= user._id %>')" />
             </td>
           </tr>
           <% }); %>
@@ -57,7 +57,7 @@
     // delete user function
 
     async function deleteUser(userId){
-      let response = await fetch(`/users/#{userId}`, {
+      let response = await fetch(`/users/${userId}`, {
         method : 'DELETE',
       });
       let result = await response.json();
